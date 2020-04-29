@@ -49,10 +49,7 @@ public class LoginAuth : MonoBehaviour
         connectionPoller.gameObject.SetActive(true);
         DontDestroyOnLoad(connectionPoller.gameObject);
         connectionPoller.gameStateManager.TransitionSceneState("MainMenu", connectionPoller.email, connectionPoller.password);
-        if (connectionPoller.gameStateManager.gameScene == "MainMenu")
-        {
-            SceneManager.LoadScene("MainMenuScene");
-        }
+        
     }
 
 }

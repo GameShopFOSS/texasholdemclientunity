@@ -43,10 +43,7 @@ public class LobbySceneManager : MonoBehaviour
     public void GotoLobbyQueue()
     {
         connectionPoller.gameStateManager.TransitionSceneState("LobbyQueue", connectionPoller.email, connectionPoller.password);
-        if (connectionPoller.gameStateManager.gameScene == "LobbyQueue")
-       {
-            SceneManager.LoadScene("LobbyQueueScene");
-       }
+      
 
     }
 

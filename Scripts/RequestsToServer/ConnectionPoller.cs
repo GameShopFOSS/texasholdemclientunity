@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BestHTTP;
 using System;
+using UnityEngine.SceneManagement;
 
 public class ConnectionPoller : MonoBehaviour
 {
@@ -86,7 +87,25 @@ public class ConnectionPoller : MonoBehaviour
         {
             Debug.Log("Request Finished! Text received: " + response.DataAsText);
 
+            if (gameScene == "MainMenu")
+            {
+                SceneManager.LoadScene("MainMenuScene");
+            }
 
+            else if (gameScene == "Lobby")
+            {
+                SceneManager.LoadScene("LobbyScene");
+            }
+
+            else if (gameScene == "GameRoom")
+            {
+
+                SceneManager.LoadScene("GameRoomScene");
+            }
+            else if (gameScene == "LobbyQueue")
+            {
+                SceneManager.LoadScene("LobbyQueueScene");
+            }
             //string responseData = response.DataAsText.Substring(1, response.DataAsText.Length - 2);
             //Debug.Log(responseData);
             //CurrentGameScene currentGameScene = CurrentGameScene.CreateFromJSON(responseData);

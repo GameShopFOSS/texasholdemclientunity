@@ -273,11 +273,8 @@ public class RoomStateHandler : MonoBehaviour
     public void MultiplayerGameStart()
     {
         connectionPoller.gameStateManager.TransitionSceneState("GameRoom", connectionPoller.email, connectionPoller.password);
-        if (connectionPoller.gameStateManager.gameScene == "GameRoom")
-        {
-            DontDestroyOnLoad(gameObject);
-            SceneManager.LoadScene("GameRoomScene");
-       }
+        
+        DontDestroyOnLoad(gameObject);
     }
 
     public class DecodeGameState

@@ -258,10 +258,10 @@ public class SignupAuth : MonoBehaviour
             connectionPoller.gameObject.SetActive(true);
             DontDestroyOnLoad(connectionPoller.gameObject);
             connectionPoller.gameStateManager.TransitionSceneState("MainMenu", connectionPoller.email, connectionPoller.password);
-            if (connectionPoller.gameStateManager.gameScene == "MainMenu")
-            {
-                SceneManager.LoadScene("MainMenuScene");
-            }
+            //if (connectionPoller.gameStateManager.gameScene == "MainMenu")
+            //{
+            //    SceneManager.LoadScene("MainMenuScene");
+            //}
         }
         else if (response.DataAsText == "Email Already Exists")
         {

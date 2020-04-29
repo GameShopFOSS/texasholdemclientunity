@@ -30,10 +30,7 @@ public class MainMenuSceneManager : MonoBehaviour
     public void GotoLobby()
     {
         connectionPoller.gameStateManager.TransitionSceneState("Lobby", connectionPoller.email, connectionPoller.password);
-        if (connectionPoller.gameStateManager.gameScene == "Lobby")
-        {
-            SceneManager.LoadScene("LobbyScene");
-        }
+        
         
     }
 
