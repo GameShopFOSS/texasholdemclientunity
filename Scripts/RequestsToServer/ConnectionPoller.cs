@@ -15,7 +15,7 @@ public class ConnectionPoller : MonoBehaviour
     void Start()
     {
         gameStateManager = new GameStateManager();
-        
+        PollServer();
     }
 
     // Update is called once per frame
