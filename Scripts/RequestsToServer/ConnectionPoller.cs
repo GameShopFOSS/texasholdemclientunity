@@ -87,25 +87,25 @@ public class ConnectionPoller : MonoBehaviour
         {
             Debug.Log("Request Finished! Text received: " + response.DataAsText);
 
-            if (gameScene == "MainMenu")
+            if (response.DataAsText.Contains("MainMenu"))
             {
                 SceneManager.LoadScene("MainMenuScene");
             }
-
-            else if (gameScene == "Lobby")
+            else if (response.DataAsText.Contains("LobbyQueue"))
+            {
+                SceneManager.LoadScene("LobbyQueueScene");
+            }
+            else if (response.DataAsText.Contains("Lobby"))
             {
                 SceneManager.LoadScene("LobbyScene");
             }
 
-            else if (gameScene == "GameRoom")
+            else if (response.DataAsText.Contains("GameRoom"))
             {
 
                 SceneManager.LoadScene("GameRoomScene");
             }
-            else if (gameScene == "LobbyQueue")
-            {
-                SceneManager.LoadScene("LobbyQueueScene");
-            }
+            
             //string responseData = response.DataAsText.Substring(1, response.DataAsText.Length - 2);
             //Debug.Log(responseData);
             //CurrentGameScene currentGameScene = CurrentGameScene.CreateFromJSON(responseData);
