@@ -15,6 +15,9 @@ public class RoomStateHandler : MonoBehaviour
     public PlayerUIManager playerUIManager;
     public PlayerTurnManager playerTurnManager;
     float elapsedTime = 0;
+    bool gameStarted = false;
+    float gameStartedElapsedTime = 0;
+    bool lockGameStarted = false;
     //LobbyQueueListItem
     // Start is called before the first frame update
     void Start()
@@ -45,6 +48,19 @@ public class RoomStateHandler : MonoBehaviour
             
             elapsedTime = 0f;
         }
+        if (gameStarted)
+        {
+            gameStartedElapsedTime += Time.deltaTime;
+            if (gameStartedElapsedTime > 5f && !lockGameStarted)
+            {
+                gameStarted = false;
+                lockGameStarted = true;
+                MultiplayerGameStart();
+                
+            }
+            
+        }
+        
     }
 
     void UpdateGameRoom()
@@ -240,10 +256,11 @@ public class RoomStateHandler : MonoBehaviour
         //  
         if (roomData.gameData[0].players != null)
         {
-            if (roomData.gameData[0].players.Count == 8)
+            if (roomData.gameData[0].players.Count == 8 && !gameStarted)
             {
-                yield return new WaitForSeconds(5);
-                MultiplayerGameStart();
+                //yield return new WaitForSeconds(5);
+                gameStarted = true;
+               
             }
         }
         //string responseData = response.DataAsText.Substring(1, response.DataAsText.Length - 2);
