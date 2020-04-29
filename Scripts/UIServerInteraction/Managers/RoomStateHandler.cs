@@ -26,7 +26,7 @@ public class RoomStateHandler : MonoBehaviour
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        if (elapsedTime > 5f)
+        if (elapsedTime > 0.5f)
         {
             if (connectionPoller.gameStateManager.gameScene == "LobbyQueue")
             {
@@ -242,6 +242,7 @@ public class RoomStateHandler : MonoBehaviour
         {
             if (roomData.gameData[0].players.Count == 8)
             {
+                yield return new WaitForSeconds(5);
                 MultiplayerGameStart();
             }
         }
