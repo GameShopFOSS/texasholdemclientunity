@@ -42,7 +42,8 @@ public class LobbySceneManager : MonoBehaviour
 
     public void GotoLobbyQueue()
     {
-        DontDestroyOnLoad(gameObject);
+       // var uil = Instantiate(useri)
+       // DontDestroyOnLoad(gameObject);
         connectionPoller.gameStateManager.TransitionSceneState("LobbyQueue", connectionPoller.email, connectionPoller.password);
       
 
