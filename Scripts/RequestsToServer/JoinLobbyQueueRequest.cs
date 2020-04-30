@@ -20,13 +20,13 @@ public class JoinLobbyQueueRequest : MonoBehaviour
         
     }
 
-    public void OnRequest()
+    public void OnRequest(UserInLobby sender)
     {
         HTTPRequest request = new HTTPRequest(new Uri("http://34.74.31.140/nodejsApp/enterspecificlobbyqueue"), HTTPMethods.Post, OnRequestFinished);
 
         request.AddField("email", lobbySceneManager.connectionPoller.email);
-
-        request.AddField("firstname", lobbySceneManager.lobbyUserPrefab.GetComponent<UserInLobby>().firstname);
+       // for (int i = 0; i < lobbySceneManager.onlinePlayersContent.transform.childCount; i++)
+        request.AddField("firstname", lobbySceneManager.connectionPoller.firstname);
         request.AddField("roomId", "" + GameObject.Find("SelectLobbyQueue(Clone)").GetComponent<LobbyQueueListItem>().roomId);
 
         request.Send();

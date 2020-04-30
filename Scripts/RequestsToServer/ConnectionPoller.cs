@@ -9,6 +9,7 @@ public class ConnectionPoller : MonoBehaviour
 {
     public string email;
     public string password;
+    public string firstname;
     float elapsedTime = 0;
     public GameStateManager gameStateManager;
     // Start is called before the first frame update

@@ -18,12 +18,17 @@ public class LobbySceneManager : MonoBehaviour
     public GameObject gameRoomPrefab;
     public UserInLobby uil;
     float elapsedTime;
+    bool freeze = false;
     // Start is called before the first frame update
     void Start()
     {
         connectionPoller = GameObject.Find("ConnectionPoller").GetComponent<ConnectionPoller>();
-        PopulateOnlinePlayers();
-        PopulateQueuesAndGameRooms();
+        if (!freeze)
+        {
+            PopulateOnlinePlayers();
+            PopulateQueuesAndGameRooms();
+        }
+     
 
     }
 
@@ -42,8 +47,9 @@ public class LobbySceneManager : MonoBehaviour
 
     public void GotoLobbyQueue()
     {
-       // var uil = Instantiate(useri)
-       // DontDestroyOnLoad(gameObject);
+        // var uil = Instantiate(useri)
+        // DontDestroyOnLoad(gameObject);
+        freeze = true;
         connectionPoller.gameStateManager.TransitionSceneState("LobbyQueue", connectionPoller.email, connectionPoller.password);
       
 
@@ -95,6 +101,10 @@ public class LobbySceneManager : MonoBehaviour
             uil.email = l.email;
             uil.firstname = l.firstname;
             uil.lastname = l.lastname;
+            if (l.email == connectionPoller.email)
+            {
+                connectionPoller.firstname = l.firstname;
+            }
             prefab.GetComponent<Text>().text = "" + l.firstname + " " + l.lastname;
             
         }
@@ -143,6 +153,7 @@ public class LobbySceneManager : MonoBehaviour
                             listItem.roomId = q.roomId;
                             listItem.players.AddRange(q.players);
                             StringBuilder textListing = new StringBuilder("");
+
                             if (q.players != null)
                             {
                                 foreach (LobbyQueuePlayers p in q.players)
