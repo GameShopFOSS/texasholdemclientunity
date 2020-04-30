@@ -192,7 +192,7 @@ public class RoomStateHandler : MonoBehaviour
     void UpdateRoom() {
         HTTPRequest request = new HTTPRequest(new Uri("http://34.74.31.140/nodejsApp/getlobbyqueuestate"), HTTPMethods.Post, OnRequestFinished);
 
-        request.AddField("roomId", GetComponent<LobbyQueueListItem>().roomId);
+        request.AddField("roomId", gameObject.GetComponent<LobbyQueueListItem>().roomId);
         
         request.Send();
     }
