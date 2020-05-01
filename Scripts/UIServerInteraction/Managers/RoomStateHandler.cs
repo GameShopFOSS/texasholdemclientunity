@@ -104,47 +104,69 @@ public class RoomStateHandler : MonoBehaviour
         playerUIManager.player7.transform.Find("Text").gameObject.GetComponent<Text>().text = gameState.gameData[0].players[6].firstname;
         playerUIManager.player8.transform.Find("Text").gameObject.GetComponent<Text>().text = gameState.gameData[0].players[7].firstname;
 
-        playerUIManager.pot.text = gameState.gameData[0].dealer.currentPot;
+        playerUIManager.pot.text = gameState.gameData[0].dealerState.currentPot;
 
-        if (gameState.gameData[0].cards.Count > 0)
+        for (int i = 0; i < 8; i++)
         {
-            cardManager.firstCard.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cards[0].suit, gameState.gameData[0].cards[0].rank);
+            if (gameState.gameData[0].players[i].email == connectionPoller.email)
+            {
+                if (gameState.gameData[0].players[i].cardsInHand.Count > 0)
+                {
+                    cardManager.handOne.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].players[i].cardsInHand[0].suit, gameState.gameData[0].players[i].cardsInHand[0].rank);
+                    cardManager.handOne.gameObject.SetActive(true);
+                    cardManager.handTwo.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].players[i].cardsInHand[1].suit, gameState.gameData[0].players[i].cardsInHand[1].rank);
+                    cardManager.handTwo.gameObject.SetActive(true);
+
+                }
+                else {
+                    cardManager.handOne.gameObject.SetActive(false);
+                    cardManager.handTwo.gameObject.SetActive(false);
+                }
+            }
+          
+        }
+      
+
+
+        if (gameState.gameData[0].cardsInPlay.Count > 0)
+        {
+            cardManager.firstCard.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[0].suit, gameState.gameData[0].cardsInPlay[0].rank);
             cardManager.firstCard.gameObject.SetActive(true);
         }
-        if (gameState.gameData[0].cards.Count > 1)
+        if (gameState.gameData[0].cardsInPlay.Count > 1)
         {
-            cardManager.secondCard.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cards[1].suit, gameState.gameData[0].cards[1].rank);
+            cardManager.secondCard.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[1].suit, gameState.gameData[0].cardsInPlay[1].rank);
             cardManager.secondCard.gameObject.SetActive(true);
         }
-        if (gameState.gameData[0].cards.Count > 2)
+        if (gameState.gameData[0].cardsInPlay.Count > 2)
         {
-            cardManager.flop.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cards[2].suit, gameState.gameData[0].cards[2].rank);
+            cardManager.flop.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[2].suit, gameState.gameData[0].cardsInPlay[2].rank);
             cardManager.flop.gameObject.SetActive(true);
         }
-        if (gameState.gameData[0].cards.Count > 3)
+        if (gameState.gameData[0].cardsInPlay.Count > 3)
         {
-            cardManager.turn.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cards[3].suit, gameState.gameData[0].cards[3].rank);
+            cardManager.turn.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[3].suit, gameState.gameData[0].cardsInPlay[3].rank);
             cardManager.turn.gameObject.SetActive(true);
         }
-        if (gameState.gameData[0].cards.Count > 4)
+        if (gameState.gameData[0].cardsInPlay.Count > 4)
         {
-            cardManager.river.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cards[4].suit, gameState.gameData[0].cards[4].rank);
+            cardManager.river.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[4].suit, gameState.gameData[0].cardsInPlay[4].rank);
             cardManager.river.gameObject.SetActive(true);
         }
 
         playerUIManager.chipAmount.text = connectionPoller.gameStateManager.chips.ToString();
         playerUIManager.dollarAmount.text = (connectionPoller.gameStateManager.chips * 1000).ToString();
-        playerUIManager.whosTurn.text = "Player "+ gameState.gameData[0].dealer.playerTurn + "'s Turn";
-        playerUIManager.timeLeft.text = (30 - int.Parse(gameState.gameData[0].dealer.turnElapsedTime)).ToString();
+        playerUIManager.whosTurn.text = "Player "+ gameState.gameData[0].dealerState.playerTurn + "'s Turn";
+        playerUIManager.timeLeft.text = (30 - int.Parse(gameState.gameData[0].dealerState.turnElapsedTime)).ToString();
         foreach (DecodeGameState.GameStatePlayer p in gameState.gameData[0].players)
         {
             if (p.email == connectionPoller.email)
             {
-                if (gameState.gameData[0].dealer.playerTurn == p.clockWisePositionFromButton)
+                if (gameState.gameData[0].dealerState.playerTurn == p.clockWisePositionFromButton)
                 {
                     playerTurnManager.isTurn = true;
                     playerTurnManager.chipsBet = long.Parse(p.chipsBlind);
-                    playerTurnManager.currentBet = long.Parse(gameState.gameData[0].dealer.currentBlind);
+                    playerTurnManager.currentBet = long.Parse(gameState.gameData[0].dealerState.currentBlind);
                     //if (p.chipsBlind >= currentBet) {
                     playerTurnManager.totalChips = connectionPoller.gameStateManager.chips;
                     playerUIManager.whosTurn.text = "Your Turn";
@@ -183,7 +205,7 @@ public class RoomStateHandler : MonoBehaviour
         //string responseData = response.DataAsText.Substring(1, response.DataAsText.Length - 2);
         //Debug.Log(responseData);
         //CurrentGameScene currentGameScene = CurrentGameScene.CreateFromJSON(responseData);
-        //gameStateManager.chips = int.Parse(currentGameScene.chips);
+        //gameStateManager.chips = int.Parse(currentGameScene.chips);deale
         //gameStateManager.gameScene = currentGameScene.gameScene;
     }
 
@@ -225,7 +247,7 @@ public class RoomStateHandler : MonoBehaviour
             Text t = avatar.transform.GetChild(0).gameObject.GetComponent<Text>();
             Debug.Log(t.name);
             Debug.Log(roomData);
-            if (roomData.gameData[0].players != null)
+            if (roomData.gameData[0] != null)
             {
                 if (roomData.gameData[0].players.Count > i - 3)
                // if(roomData.gameData.players[i - 3].firstname != "")
@@ -297,8 +319,8 @@ public class RoomStateHandler : MonoBehaviour
         public class GameStateData
         {
             public IList<GameStatePlayer> players;// = new List<GameStatePlayer>();
-            public IList<GameStateCard> cards;// = new List<GameStateCard>();
-            public GameStateDealer dealer;
+            public IList<GameStateCard> cardsInPlay;// = new List<GameStateCard>();
+            public GameStateDealer dealerState;
             //public string roomId;
             //public float health;
             //public GameStateData(List<GameStatePlayer> p, List<GameStateCard> c)
