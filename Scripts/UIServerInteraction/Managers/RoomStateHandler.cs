@@ -247,7 +247,7 @@ public class RoomStateHandler : MonoBehaviour
             Text t = avatar.transform.GetChild(0).gameObject.GetComponent<Text>();
             Debug.Log(t.name);
             Debug.Log(roomData);
-            if (roomData.gameData[0] != null)
+            if (roomData.gameData != null)
             {
                 if (roomData.gameData[0].players.Count > i - 3)
                // if(roomData.gameData.players[i - 3].firstname != "")
