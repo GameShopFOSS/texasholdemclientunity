@@ -30,9 +30,11 @@ public class PlayerTurnManager : MonoBehaviour
         {
             HTTPRequest request = new HTTPRequest(new Uri("http://34.74.31.140/nodejsApp/submitplayeraction"), HTTPMethods.Post, OnSubmitPlayerAction);
             request.AddField("action", "fold");
-
-             request.AddField("amount", "0");
-
+            request.AddField("roomId", GameObject.Find("CurrentRoomId").GetComponent<CurrentRoomId>().currentRoomId.ToString());
+            request.AddField("email", GameObject.Find("ConnectionPoller").GetComponent<ConnectionPoller>().email);
+            request.AddField("password", GameObject.Find("ConnectionPoller").GetComponent<ConnectionPoller>().password);
+            request.AddField("amount", "0");
+           
 
             request.Send();
         }
@@ -47,7 +49,9 @@ public class PlayerTurnManager : MonoBehaviour
 
                 HTTPRequest request = new HTTPRequest(new Uri("http://34.74.31.140/nodejsApp/submitplayeraction"), HTTPMethods.Post, OnSubmitPlayerAction);
                 request.AddField("action", "check");
-
+                request.AddField("roomId", GameObject.Find("CurrentRoomId").GetComponent<CurrentRoomId>().currentRoomId.ToString());
+                request.AddField("email", GameObject.Find("ConnectionPoller").GetComponent<ConnectionPoller>().email);
+                request.AddField("password", GameObject.Find("ConnectionPoller").GetComponent<ConnectionPoller>().password);
                 request.AddField("amount", "");
 
 
@@ -72,7 +76,9 @@ public class PlayerTurnManager : MonoBehaviour
             {
                 HTTPRequest request = new HTTPRequest(new Uri("http://34.74.31.140/nodejsApp/submitplayeraction"), HTTPMethods.Post, OnSubmitPlayerAction);
                 request.AddField("action", "call" );
-
+                request.AddField("roomId", GameObject.Find("CurrentRoomId").GetComponent<CurrentRoomId>().currentRoomId.ToString());
+                request.AddField("email", GameObject.Find("ConnectionPoller").GetComponent<ConnectionPoller>().email);
+                request.AddField("password", GameObject.Find("ConnectionPoller").GetComponent<ConnectionPoller>().password);
                 request.AddField("amount", CallMatch());
 
 
@@ -104,7 +110,9 @@ public class PlayerTurnManager : MonoBehaviour
             {
                 HTTPRequest request = new HTTPRequest(new Uri("http://34.74.31.140/nodejsApp/submitplayeraction"), HTTPMethods.Post, OnSubmitPlayerAction);
                 request.AddField("action", "raise");
-
+                request.AddField("roomId", GameObject.Find("CurrentRoomId").GetComponent<CurrentRoomId>().currentRoomId.ToString());
+                request.AddField("email", GameObject.Find("ConnectionPoller").GetComponent<ConnectionPoller>().email);
+                request.AddField("password", GameObject.Find("ConnectionPoller").GetComponent<ConnectionPoller>().password);
                 request.AddField("amount", RaiseMatch());
 
 

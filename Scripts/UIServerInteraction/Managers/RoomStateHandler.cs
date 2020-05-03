@@ -110,18 +110,26 @@ public class RoomStateHandler : MonoBehaviour
         {
             if (gameState.gameData[0].players[i].email == connectionPoller.email)
             {
-                if (gameState.gameData[0].players[i].cardsInHand.Count > 0)
+                if (gameState.gameData[0].players[i].cardsInHand.Count == 0)
                 {
-                    cardManager.handOne.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].players[i].cardsInHand[0].suit, gameState.gameData[0].players[i].cardsInHand[0].rank);
-                    cardManager.handOne.gameObject.SetActive(true);
-                    cardManager.handTwo.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].players[i].cardsInHand[1].suit, gameState.gameData[0].players[i].cardsInHand[1].rank);
-                    cardManager.handTwo.gameObject.SetActive(true);
-
-                }
-                else {
                     cardManager.handOne.gameObject.SetActive(false);
                     cardManager.handTwo.gameObject.SetActive(false);
                 }
+                if (gameState.gameData[0].players[i].cardsInHand.Count > 0)
+                {
+                    cardManager.handOne.gameObject.SetActive(true);
+                    cardManager.handOne.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].players[i].cardsInHand[0].suit, gameState.gameData[0].players[i].cardsInHand[0].rank).GetComponent<Image>().sprite;
+                   
+                   
+                }
+                 if (gameState.gameData[0].players[i].cardsInHand.Count > 1)
+                {
+                    cardManager.handTwo.gameObject.SetActive(true);
+                    cardManager.handTwo.sprite  = cardResolver.resolveWhichCard(gameState.gameData[0].players[i].cardsInHand[1].suit, gameState.gameData[0].players[i].cardsInHand[1].rank).GetComponent<Image>().sprite;
+
+
+                }
+                
             }
           
         }
@@ -130,28 +138,33 @@ public class RoomStateHandler : MonoBehaviour
 
         if (gameState.gameData[0].cardsInPlay.Count > 0)
         {
-            cardManager.firstCard.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[0].suit, gameState.gameData[0].cardsInPlay[0].rank);
             cardManager.firstCard.gameObject.SetActive(true);
+            cardManager.firstCard = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[0].suit, gameState.gameData[0].cardsInPlay[0].rank).GetComponent<Image>();
+            
         }
         if (gameState.gameData[0].cardsInPlay.Count > 1)
         {
-            cardManager.secondCard.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[1].suit, gameState.gameData[0].cardsInPlay[1].rank);
             cardManager.secondCard.gameObject.SetActive(true);
+            cardManager.secondCard = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[1].suit, gameState.gameData[0].cardsInPlay[1].rank).GetComponent<Image>();
+            
         }
         if (gameState.gameData[0].cardsInPlay.Count > 2)
         {
-            cardManager.flop.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[2].suit, gameState.gameData[0].cardsInPlay[2].rank);
             cardManager.flop.gameObject.SetActive(true);
+            cardManager.flop = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[2].suit, gameState.gameData[0].cardsInPlay[2].rank).GetComponent<Image>();
+          
         }
         if (gameState.gameData[0].cardsInPlay.Count > 3)
         {
-            cardManager.turn.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[3].suit, gameState.gameData[0].cardsInPlay[3].rank);
             cardManager.turn.gameObject.SetActive(true);
+            cardManager.turn = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[3].suit, gameState.gameData[0].cardsInPlay[3].rank).GetComponent<Image>();
+            
         }
         if (gameState.gameData[0].cardsInPlay.Count > 4)
         {
-            cardManager.river.sprite = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[4].suit, gameState.gameData[0].cardsInPlay[4].rank);
             cardManager.river.gameObject.SetActive(true);
+            cardManager.river = cardResolver.resolveWhichCard(gameState.gameData[0].cardsInPlay[4].suit, gameState.gameData[0].cardsInPlay[4].rank).GetComponent<Image>();
+           
         }
 
         playerUIManager.chipAmount.text = connectionPoller.gameStateManager.chips.ToString();

@@ -51,6 +51,8 @@ public class CreateLobbyQueueRequest : MonoBehaviour
             roomManager.GetComponent<LobbyQueueListItem>().players.AddRange(lobbySceneManager.lobbyQueuePrefab.GetComponent<LobbyQueueListItem>().players);
             DontDestroyOnLoad(roomManager);
         //DontDestroyOnLoad(gameObject);
+        var currentRoomId = GameObject.Find("CurrentRoomId").GetComponent<CurrentRoomId>();
+        DontDestroyOnLoad(currentRoomId);
             lobbySceneManager.GotoLobbyQueue();
        // }
 
